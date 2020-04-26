@@ -1,10 +1,18 @@
+#upload_form {
+    margin-bottom: 10px;
+}
+.result-list {
+    margin: 0px;
+    padding: 0px;
+    margin-top: 10px;
+}
 .result-list > li {
     list-style-type: "-";
-    margin: 10px;
+    margin-left: 20px;
 }
 .result-list > li.list-header {
     font-weight: bold;
-    margin: 0px;
+    margin-left: 0px;
     list-style-type: none;
 }
 #error_div {
@@ -14,6 +22,18 @@
 #status_div {
     color: #00aa00;
     font-weight: bold;
+}
+#size_div .bold {
+    font-weight: bold;
+}
+#size_div .red {
+    color: #aa0000;
+}
+#size_div .green {
+    color: #00aa00;
+}
+#size_div .blue {
+    color: #0000aa;
 }
 .header-content {
     width: 100%;

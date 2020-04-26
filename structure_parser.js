@@ -86,12 +86,11 @@ export const readStructure = async file => {
         throw 'File is either not an NBT file or is corrupt.';
     }
     const resultValue = getValue(result.value);
-
     try {
         const palette = getPalette(resultValue);
         const blocksAndCounts = getBlocksAndCounts(resultValue, palette);
         const entitiesAndCounts = getEntititesAndCounts(resultValue);
-        return Object.assign({}, {palette}, blocksAndCounts, entitiesAndCounts);
+        return Object.assign({}, {palette}, {size: resultValue.size}, blocksAndCounts, entitiesAndCounts);
     } catch (er) {
         throw 'File is an NBT file, but not one that represents a Minecraft structure.';
     }

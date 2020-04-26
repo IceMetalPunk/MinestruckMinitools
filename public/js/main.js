@@ -3,11 +3,13 @@ const blockUl = document.getElementById('block_list');
 const entityUl = document.getElementById('entity_list');
 const errorDiv = document.getElementById('error_div');
 const statusDiv = document.getElementById('status_div');
+const sizeDiv = document.getElementById('size_div');
 fileIn.addEventListener('change', ev => {
     const statusIndicator = setTimeout(() => {
         errorDiv.innerHTML = '';
         blockUl.innerHTML = '';
         entityUl.innerHTML = '';
+        sizeDiv.innerHTML = '';
         statusDiv.innerHTML = 'Analyzing... Please wait...';
     }, 500);
     ev.cancelBubble = true;
@@ -25,6 +27,9 @@ fileIn.addEventListener('change', ev => {
         }
         blockUl.innerHTML = '';
         entityUl.innerHTML = '';
+        const formatter = Intl.NumberFormat("en-us");
+        const size = data.size.map(formatter.format);
+        sizeDiv.innerHTML = `<span class='bold'>Size:</span> (<span class='red'>${size[0]}x</span>, <span class='green'>${size[1]}y</span>, <span class='blue'>${size[2]}z</span>) [${formatter.format(data.size[0] * data.size[1] * data.size[2])} blocks total]`;
         const blocks = Object.entries(data.blockCounts);
         if (blocks.length > 0) {
             const li = document.createElement('li');
@@ -33,7 +38,7 @@ fileIn.addEventListener('change', ev => {
             blockUl.appendChild(li);
             for (const entry of blocks) {
                 const li = document.createElement('li');
-                li.innerHTML = `${entry[0]} &times; ${entry[1]}`;
+                li.innerHTML = `${entry[0]} &times; ${formatter.format(+entry[1])}`;
                 blockUl.appendChild(li);
             }
         } else {
@@ -51,7 +56,7 @@ fileIn.addEventListener('change', ev => {
             entityUl.appendChild(li);
             for (const entry of entities) {
                 const li = document.createElement('li');
-                li.innerHTML = `${entry[0]} &times; ${entry[1]}`;
+                li.innerHTML = `${entry[0]} &times; ${formatter.format(+entry[1])}`;
                 entityUl.appendChild(li);
             }
         } else {
@@ -64,6 +69,7 @@ fileIn.addEventListener('change', ev => {
     .catch(er => {
         blockUl.innerHTML = '';
         entityUl.innerHTML = '';
+        sizeDiv.innerHTML = '';
         errorDiv.innerHTML = er.code;
     })
     .finally(() => {
