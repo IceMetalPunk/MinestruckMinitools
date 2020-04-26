@@ -11,15 +11,9 @@ server.use(
 );
 server.use(express.static('public'));
 const PORT = process.env.PORT || 3000;
-
-// (async () => {
-//     try {
-//         const result = await readStructure('test.nbt');
-//         console.log(result);
-//     } catch(er) {
-//         console.error(er);
-//     }
-// })();
+server.get("/", function (req, res) {
+    res.sendFile(__dirname + '/public/index.html');
+});
 
 server.post('/analyze', async (req,res) => {
     if (!req.files || Object.keys(req.files).length === 0) {
