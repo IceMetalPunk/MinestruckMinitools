@@ -31,13 +31,24 @@ export const getPalette = nbt => {
     });
 };
 
-export const getBlocksAndCounts = (nbt, palette, ignoredBlocks = ['Air', 'Cave Air', 'Void Air']) => {
+const removeIgnoredBlocks = (nbt, blocksAndCounts, ignoredBlocks = {'Air': 'minecraft:air', 'Cave Air': 'minecraft:cave_air', 'Void Air': 'minecraft:void_air'}) => {
+    Object.entries(blocksAndCounts.blockCounts).forEach(entry => {
+        if (entry[0] in ignoredBlocks) {
+            nbt.size[3] -= entry[1];
+            delete blocksAndCounts.blockCounts[entry[0]];
+        }
+    });
+    const resLocations = Object.values(ignoredBlocks);
+    blocksAndCounts.blockList = blocksAndCounts.blockList.filter(block => {
+        return !resLocations.includes(block.state.name);
+    });
+}
+
+export const getBlocksAndCounts = (nbt, palette) => {
     const blockCounts = {};
     const blockList = nbt.blocks.map(entry => {
         const blockName = getCleanResourceLocation(palette[entry.state].name);
-        if (!ignoredBlocks.includes(blockName)) {
-            blockCounts[blockName] = (blockCounts[blockName] || 0) + 1;
-        }
+        blockCounts[blockName] = (blockCounts[blockName] || 0) + 1;
         return {
             pos: entry.pos,
             state: palette[entry.state]
@@ -86,10 +97,12 @@ export const readStructure = async file => {
         throw 'File is either not an NBT file or is corrupt.';
     }
     const resultValue = getValue(result.value);
+    resultValue.size.push(resultValue.size[0] * resultValue.size[1] * resultValue.size[2]);
     try {
         const palette = getPalette(resultValue);
         const blocksAndCounts = getBlocksAndCounts(resultValue, palette);
         const entitiesAndCounts = getEntititesAndCounts(resultValue);
+        removeIgnoredBlocks(resultValue, blocksAndCounts);
         return Object.assign({}, {palette}, {size: resultValue.size}, blocksAndCounts, entitiesAndCounts);
     } catch (er) {
         throw 'File is an NBT file, but not one that represents a Minecraft structure.';

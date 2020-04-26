@@ -29,7 +29,7 @@ fileIn.addEventListener('change', ev => {
         entityUl.innerHTML = '';
         const formatter = Intl.NumberFormat("en-us");
         const size = data.size.map(formatter.format);
-        sizeDiv.innerHTML = `<span class='bold'>Size:</span> (<span class='red'>${size[0]}x</span>, <span class='green'>${size[1]}y</span>, <span class='blue'>${size[2]}z</span>) [${formatter.format(data.size[0] * data.size[1] * data.size[2])} blocks total]`;
+        sizeDiv.innerHTML = `<span class='bold'>Size:</span> (<span class='red'>${size[0]}x</span>, <span class='green'>${size[1]}y</span>, <span class='blue'>${size[2]}z</span>) [${formatter.format(data.size[3])} blocks total, excluding air blocks]`;
         const blocks = Object.entries(data.blockCounts);
         if (blocks.length > 0) {
             const li = document.createElement('li');
