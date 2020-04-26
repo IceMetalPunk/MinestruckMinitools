@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Test Minestruck Mini Tools</title>
+</head>
+<body>
+    <h2>Minestruck Minitools</h2>
+    <div class='header-content'>
+        <p>Due to various circumstances, some beyond my control, Minestruck is now down on its host, and I have no access to its files to move it somewhere else. In the meantime, if you were using Minestruck to analyze structure NBT files to get materials lists, you can use the simple recreation of that tool below.</p>
+        <p>I apologize for all the inconvenience; the situation saddens me, too.</p>
+    </div>
+    <form id="upload_form">
+        Select an NBT file: <input type="file" id="file_in"><br>
+    </form>
+    <div id="status_div"></div>
+    <div id="error_div"></div>
+    <ul id="block_list" class="result-list"></ul>
+    <ul id="entity_list" class="result-list"></ul>
+    <script src='./js/main.js'></script>
+</body>
+</html>

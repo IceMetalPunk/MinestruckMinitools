@@ -1,0 +1,22 @@
+.result-list > li {
+    list-style-type: "-";
+    margin: 10px;
+}
+.result-list > li.list-header {
+    font-weight: bold;
+    margin: 0px;
+    list-style-type: none;
+}
+#error_div {
+    color: #aa0000;
+    font-weight: bold;
+}
+#status_div {
+    color: #00aa00;
+    font-weight: bold;
+}
+.header-content {
+    width: 100%;
+    border-bottom: 1px solid #000000;
+    margin-bottom: 10px;
+}
